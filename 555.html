@@ -10,11 +10,13 @@
       height: 100vh;
       margin: 0;
       background-color: #f0f0f0;
+      flex-direction: column; /* To stack the image and refresh count */
     }
     img {
       max-width: 90%;
-      max-height: 90%;
+      max-height: 80%; /* Adjusted to make space for the refresh count */
       border: 1px solid #ccc;
+      margin-bottom: 20px; /* Add some space below the image */
     }
   </style>
 </head>
@@ -22,14 +24,13 @@
 
   <img id="randomImage" src="" alt="Random Image">
 
-
   <script>
-  const images = [
-    "clue 5.1_samia.png",
-    "Clue-15_Farhan.png"
-  ];
+    const images = [
+      "clue 5.1_samia.png",
+      "Clue-15_Farhan.png"
+    ];
 
-  let lastImage = null;
+    let lastImage = null;
     let repeatCount = 0;
     const maxRepeats = 2;
 
@@ -58,7 +59,23 @@
       imageElement.src = getValidRandomImage();
     }
 
-    window.onload = displayRandomImage;
+    window.onload = function() {
+      displayRandomImage(); // Call displayRandomImage when the window loads
+
+      if (sessionStorage.getItem('refreshCount') === null) {
+        sessionStorage.setItem('refreshCount', '0');
+      }
+
+      let refreshCount = parseInt(sessionStorage.getItem('refreshCount'));
+      refreshCount++;
+      sessionStorage.setItem('refreshCount', refreshCount.toString());
+
+      if (refreshCount > 1) {
+        document.body.innerHTML = "<h1>You have refreshed too many times!</h1>";
+        // Or you can redirect the user.
+        // window.location.href = "https://www.example.com/refresh-limit-reached";
+      } 
+    };
   </script>
 
 </body>
