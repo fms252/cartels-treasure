@@ -72,7 +72,7 @@ window.onload = function() {
     refreshCount++;
     sessionStorage.setItem('refreshCount', refreshCount.toString());
 
-    if (refreshCount > 2) {
+    if (refreshCount > 1) {
       document.body.innerHTML = "<h1>You have refreshed too many times!</h1>"; // basic
       //Or you can redirect the user.
       //window.location.href = "https://www.example.com/refresh-limit-reached";
