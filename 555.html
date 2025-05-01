@@ -1,65 +1,36 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Random Image Display</title>
-  <style>
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      background-color: #f0f0f0;
-    }
-    img {
-      max-width: 90%;
-      max-height: 90%;
-      border: 1px solid #ccc;
-    }
-  </style>
-</head>
-<body>
-
-  <img id="randomImage" src="" alt="Random Image">
-
-
-  <script>
+<script>
   const images = [
-    "clue 5.1_samia.png",
-    "Clue-15_Farhan.png"
+    "QR-5/clue%205.1_samia.png",
+    "QR-5/Clue-15_Farhan.png"
   ];
 
   let lastImage = null;
-    let repeatCount = 0;
-    const maxRepeats = 2;
+  let repeatCount = 0;
+  const maxRepeats = 2;
 
-    function getValidRandomImage() {
-      let availableImages = images.filter(img => img !== lastImage || repeatCount < maxRepeats);
+  function getValidRandomImage() {
+    let availableImages = images.filter(img => img !== lastImage || repeatCount < maxRepeats);
 
-      // If only one image is available and it’s the one we've repeated enough, we must choose from all
-      if (availableImages.length === 0) {
-        availableImages = images.filter(img => img !== lastImage);
-      }
-
-      const selectedImage = availableImages[Math.floor(Math.random() * availableImages.length)];
-
-      if (selectedImage === lastImage) {
-        repeatCount++;
-      } else {
-        lastImage = selectedImage;
-        repeatCount = 1;
-      }
-
-      return selectedImage;
+    if (availableImages.length === 0) {
+      availableImages = images.filter(img => img !== lastImage);
     }
 
-    function displayRandomImage() {
-      const imageElement = document.getElementById("randomImage");
-      imageElement.src = getValidRandomImage();
+    const selectedImage = availableImages[Math.floor(Math.random() * availableImages.length)];
+
+    if (selectedImage === lastImage) {
+      repeatCount++;
+    } else {
+      lastImage = selectedImage;
+      repeatCount = 1;
     }
 
-    window.onload = displayRandomImage;
-  </script>
+    return selectedImage;
+  }
 
-</body>
-</html>
+  function displayRandomImage() {
+    const imageElement = document.getElementById("randomImage");
+    imageElement.src = encodeURI(getValidRandomImage());
+  }
+
+  window.onload = displayRandomImage;
+</script>
